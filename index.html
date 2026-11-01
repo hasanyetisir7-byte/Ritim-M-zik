@@ -1,31 +1,99 @@
 <!doctype html>
-<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ritim — Müzik Kütüphanen</title>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ritim — Ortak Müzik Kütüphanesi</title>
 <style>
 :root{color-scheme:dark;--green:#1ed760;--panel:#121712;--muted:#a7b0a8}*{box-sizing:border-box}body{margin:0;background:#090c0a;color:#f5f7f5;font:15px system-ui,Arial}.layout{min-height:100vh;display:grid;grid-template-columns:225px 1fr;gap:9px;padding:9px}.side,.main,.player{background:var(--panel);border-radius:12px}.side{padding:25px 18px;display:flex;flex-direction:column;gap:30px}.logo{font-size:25px;font-weight:850}.logo i{font-style:normal;color:#081008;background:var(--green);border-radius:50%;padding:2px 8px;margin-right:7px}.nav button{display:block;width:100%;text-align:left;color:var(--muted);background:none;border:0;padding:12px 8px;font-weight:700;cursor:pointer}.nav button.active,.nav button:hover{color:white;background:#202820;border-radius:7px}.hint{margin-top:auto;color:#879188;font-size:12px}.main{padding:28px;overflow:auto;background:linear-gradient(#1b3021,#121712 330px)}.top{display:flex;justify-content:flex-end;gap:10px;margin-bottom:38px}.search{background:white;color:#111;border-radius:30px;padding:10px 16px;width:min(350px,55vw)}.search input{border:0;outline:0;color:#111;width:90%}.btn{border:0;border-radius:25px;padding:11px 18px;font-weight:800;cursor:pointer}.green{background:var(--green);color:#071009}h1{font-size:clamp(30px,5vw,45px);margin:0 0 8px}.muted{color:#bdc7bf;margin:0 0 25px}.upload{display:flex;align-items:center;gap:15px;flex-wrap:wrap;border:1px dashed #718276;border-radius:12px;padding:17px;margin:20px 0 30px}.upload small{display:block;color:#b3bdb5}.heading{display:flex;justify-content:space-between;align-items:center;margin:28px 0 14px}.heading h2{font-size:21px;margin:0}.muted2{font-size:12px;color:var(--muted)}.quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.tile{display:flex;align-items:center;gap:10px;background:#ffffff15;border:0;border-radius:8px;color:white;text-align:left;overflow:hidden;cursor:pointer;min-width:0}.art{width:55px;height:55px;flex:none;display:grid;place-items:center;background:linear-gradient(135deg,#376546,#141a15);font-size:24px}.tile b{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.list{display:grid;gap:4px}.song{display:grid;grid-template-columns:32px minmax(0,1fr) 70px 34px 34px;gap:10px;align-items:center;padding:9px;border-radius:7px;color:var(--muted)}.song:hover{background:#ffffff12}.songname{min-width:0}.songname b{display:block;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.songname small{font-size:12px}.song button{background:none;color:#e2e9e3;border:0;font-size:17px;cursor:pointer}.empty{border:1px solid #344037;border-radius:12px;text-align:center;padding:35px;color:var(--muted)}.empty b{display:block;color:white;margin:8px}.player{position:fixed;bottom:9px;left:9px;right:9px;border:1px solid #2c382e;padding:12px 18px;display:grid;grid-template-columns:1fr 1.5fr 1fr;align-items:center;gap:15px}.now{min-width:0}.now b,.now small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.now small{color:var(--muted);font-size:12px}.controls{text-align:center}.controls button{border:0;background:none;color:white;font-size:19px;cursor:pointer}.controls .play{background:white;color:#101510;border-radius:50%;width:36px;height:36px;font-size:16px}.bar{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:11px}.bar input{width:100%;accent-color:var(--green)}.volume{text-align:right}.volume input{width:90px;accent-color:var(--green)}.toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:white;color:#111;padding:10px 16px;border-radius:20px;display:none}
 @media(max-width:800px){.layout{grid-template-columns:170px 1fr}.quick{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.layout{display:block;padding:0}.side{border-radius:0;padding:12px 16px;display:flex;flex-direction:row;align-items:center;justify-content:space-between}.side .hint{display:none}.nav{display:flex}.nav button{width:auto;font-size:0;padding:8px}.nav button:after{content:"☰";font-size:18px}.main{border-radius:0;padding:18px 14px 130px;min-height:calc(100vh - 70px)}.top{justify-content:stretch}.search{width:100%}.upload{font-size:13px}.quick{grid-template-columns:1fr 1fr}.song{grid-template-columns:25px minmax(0,1fr) 30px 30px}.song .length{display:none}.player{left:0;right:0;bottom:0;border-radius:12px 12px 0 0;grid-template-columns:1fr auto;padding:9px}.controls{grid-column:2;grid-row:1}.bar,.volume{display:none}}
 </style></head><body>
-<div class="layout"><aside class="side"><div class="logo"><i>♫</i>ritim</div><nav class="nav"><button class="active" id="home">⌂　Ana sayfa</button><button id="library">▤　Kütüphanem</button></nav><div class="hint">Kendi müziklerin, kendi alanın.<br>Dosyaların bu tarayıcıda saklanır.</div></aside>
-<main class="main"><div class="top"><label class="search">⌕ <input id="search" placeholder="Şarkı veya sanatçı ara..."></label><button class="btn green" id="uploadBtn">＋ Yükle</button></div><h1>Müziğin burada. 🎧</h1><p class="muted">Kendi şarkılarını yükle, dinle ve indir.</p><label class="upload" for="files"><span style="font-size:27px">⬆️</span><span><b>Şarkılarını ekle</b><small>MP3, WAV, OGG, M4A ve diğer ses dosyaları</small></span><span class="btn green">Dosya seç</span></label><input id="files" type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac" multiple hidden>
+<div class="layout"><aside class="side"><div class="logo"><i>♫</i>ritim</div><nav class="nav"><button class="active" id="home">⌂　Ana sayfa</button><button id="library">▤　Kütüphanem</button></nav><div class="hint">Kendi müziklerin, kendi alanın.<br>Herkes için ortak müzik kütüphanesi.</div></aside>
+<main class="main"><div class="top"><label class="search">⌕ <input id="search" placeholder="Şarkı veya sanatçı ara..."></label><button class="btn" id="loginBtn">Yönetici girişi</button><button class="btn" id="logoutBtn" style="display:none">Çıkış</button><button class="btn green" id="uploadBtn" style="display:none">＋ Yükle</button></div><h1>Müziğin burada. 🎧</h1><p class="muted">Kendi şarkılarını yükle, dinle ve indir.</p><label class="upload" id="uploadArea" for="files" style="display:none"><span style="font-size:27px">⬆️</span><span><b>Şarkılarını ekle</b><small>MP3, WAV, OGG, M4A ve diğer ses dosyaları</small></span><span class="btn green">Dosya seç</span></label><input id="files" type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac" multiple hidden>
 <div class="heading"><h2>Son eklenenler</h2><span class="muted2" id="count">0 şarkı</span></div><div class="quick" id="quick"></div>
 <div class="heading"><h2 id="listTitle">Tüm şarkıların</h2><span class="muted2">Kişisel kütüphanen</span></div><div class="list" id="list"></div></main></div>
 <div class="player"><div class="now"><b id="now">Bir şarkı seç</b><small id="artist">Çalmıyor</small></div><div class="controls"><button id="prev">⏮</button> <button class="play" id="toggle">▶</button> <button id="next">⏭</button><div class="bar"><span id="elapsed">0:00</span><input id="seek" type="range" min="0" max="100" value="0"><span id="total">0:00</span></div></div><div class="volume">🔊 <input id="volume" type="range" min="0" max="1" step=".01" value=".8"></div></div><div class="toast" id="toast"></div><audio id="audio"></audio>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const DB='ritim-music-db';let db,items=[],playing=null,objectUrl=null;const audio=document.getElementById('audio');const el=id=>document.getElementById(id);
-function message(s){el('toast').textContent=s;el('toast').style.display='block';setTimeout(()=>el('toast').style.display='none',2300)}
-function openDB(){return new Promise((ok,no)=>{let r=indexedDB.open(DB,1);r.onupgradeneeded=()=>r.result.createObjectStore('tracks',{keyPath:'id'});r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}
-function all(){return new Promise((ok,no)=>{let r=db.transaction('tracks').objectStore('tracks').getAll();r.onsuccess=()=>ok(r.result.sort((a,b)=>b.added-a.added));r.onerror=()=>no(r.error)})}
-function put(t){return new Promise((ok,no)=>{let r=db.transaction('tracks','readwrite').objectStore('tracks').put(t);r.onsuccess=ok;r.onerror=()=>no(r.error)})}
-function fmt(n){return Number.isFinite(n)?Math.floor(n/60)+':'+String(Math.floor(n%60)).padStart(2,'0'):'0:00'}
-function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-async function refresh(){items=await all();draw()}
-function draw(){let q=el('search').value.toLocaleLowerCase('tr');let filtered=items.filter(x=>(x.name+' '+x.artist).toLocaleLowerCase('tr').includes(q));el('count').textContent=items.length+' şarkı';el('quick').innerHTML=items.slice(0,4).map(x=>'<button class="tile" data-play="'+x.id+'"><span class="art">♫</span><span><b>'+safe(x.name)+'</b></span></button>').join('')||'<div class="empty" style="grid-column:1/-1">🎵<b>Henüz şarkı eklemedin</b>İlk müziğini yükleyerek kütüphaneni oluştur.</div>';el('list').innerHTML=filtered.map((x,i)=>'<div class="song"><span>'+(x.id===playing?'♫':i+1)+'</span><span class="songname"><b>'+safe(x.name)+'</b><small>'+(safe(x.artist||'Kendi yüklediğin şarkı'))+'</small></span><span class="length">'+fmt(x.duration)+'</span><button title="İndir" data-down="'+x.id+'">⬇</button><button title="Sil" data-del="'+x.id+'">×</button></div>').join('')||'<div class="empty"><b>'+(items.length?'Sonuç bulunamadı':'Kütüphanen boş')+'</b>'+(items.length?'Başka bir isim dene.':'Yükle düğmesiyle müzik ekleyebilirsin.')+'</div>'}
-async function upload(files){for(let f of files){if(!f.type.startsWith('audio/')&&!/\.(mp3|wav|ogg|m4a|flac|aac)$/i.test(f.name)){message('Ses dosyası değil: '+f.name);continue}let a=new Audio(),duration=await new Promise(ok=>{a.onloadedmetadata=()=>ok(a.duration||0);a.onerror=()=>ok(0);a.src=URL.createObjectURL(f)});await put({id:crypto.randomUUID(),name:f.name.replace(/\.[^.]+$/,''),artist:'',duration:duration,blob:f,added:Date.now()})}await refresh();message(files.length+' dosya eklendi')}
-function play(id){let t=items.find(x=>x.id===id);if(!t)return;if(playing===id&&!audio.paused){audio.pause();return}if(objectUrl)URL.revokeObjectURL(objectUrl);objectUrl=URL.createObjectURL(t.blob);audio.src=objectUrl;playing=id;el('now').textContent=t.name;el('artist').textContent='Kendi kütüphanenden';audio.play().catch(()=>message('Şarkı oynatılamadı'));el('toggle').textContent='Ⅱ';draw()}
+const SUPABASE_URL="https://ptntidabnnwthdtxpdvk.supabase.co";
+const SUPABASE_KEY="sb_publishable_jZ4PpPfnaqnx2l-AD9m3uA_sg3CjpSx";
+const ADMIN_EMAIL="hasanmeteyetisir142@gmail.com";
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let currentUser=null,items=[],playing=null,audioUrl=null;
+const audio=document.getElementById('audio'),el=id=>document.getElementById(id);
+function message(s){el('toast').textContent=s;el('toast').style.display='block';setTimeout(()=>el('toast').style.display='none',2600)}
+function fmt(n){return Number.isFinite(Number(n))?Math.floor(Number(n)/60)+':'+String(Math.floor(Number(n)%60)).padStart(2,'0'):'0:00'}
+function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function isAdmin(){return !!currentUser&&String(currentUser.email||'').toLowerCase()===ADMIN_EMAIL}
+function updateAdminUI(){
+ el('loginBtn').style.display=isAdmin()?'none':'inline-block';
+ el('logoutBtn').style.display=isAdmin()?'inline-block':'none';
+ el('uploadBtn').style.display=isAdmin()?'inline-block':'none';
+ el('uploadArea').style.display=isAdmin()?'flex':'none';
+ el('artist').textContent=isAdmin()?'Yönetici modu':'Ortak kütüphane';
+}
+async function refresh(){
+ const {data,error}=await supabaseClient.from('songs').select('*').order('created_at',{ascending:false});
+ if(error){message('Şarkılar yüklenemedi: '+error.message);return}
+ items=(data||[]).map(x=>({...x,id:x.id,name:x.title,artist:x.artist||'',duration:Number(x.duration)||0,url:supabaseClient.storage.from('ritim-music').getPublicUrl(x.file_path).data.publicUrl}));
+ draw();
+}
+function draw(){
+ const q=el('search').value.toLocaleLowerCase('tr');
+ const filtered=items.filter(x=>(x.name+' '+x.artist).toLocaleLowerCase('tr').includes(q));
+ el('count').textContent=items.length+' şarkı';
+ el('quick').innerHTML=items.slice(0,4).map(x=>'<button class="tile" data-play="'+x.id+'"><span class="art">♫</span><span><b>'+safe(x.name)+'</b></span></button>').join('')||'<div class="empty" style="grid-column:1/-1">🎵<b>Henüz şarkı eklenmemiş</b>Yönetici yeni müzikler eklediğinde burada görünecek.</div>';
+ el('list').innerHTML=filtered.map((x,i)=>'<div class="song"><span>'+(x.id===playing?'♫':i+1)+'</span><span class="songname"><b>'+safe(x.name)+'</b><small>'+safe(x.artist||'Ritim kütüphanesi')+'</small></span><span class="length">'+fmt(x.duration)+'</span><button title="İndir" data-down="'+x.id+'">⬇</button>'+(isAdmin()?'<button title="Sil" data-del="'+x.id+'">×</button>':'<span></span>')+'</div>').join('')||'<div class="empty"><b>Sonuç bulunamadı</b>Başka bir isim dene.</div>';
+}
+async function upload(files){
+ for(const f of files){
+  if(!f.type.startsWith('audio/')&&!/\.(mp3|wav|ogg|m4a|flac|aac)$/i.test(f.name)){message('Ses dosyası değil: '+f.name);continue}
+  const id=crypto.randomUUID(),ext=(f.name.split('.').pop()||'mp3').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const path=id+'.'+ext;
+  const tempUrl=URL.createObjectURL(f),probe=new Audio();
+  const duration=await new Promise(resolve=>{probe.onloadedmetadata=()=>resolve(probe.duration||0);probe.onerror=()=>resolve(0);probe.src=tempUrl});
+  URL.revokeObjectURL(tempUrl);
+  const {error:upErr}=await supabaseClient.storage.from('ritim-music').upload(path,f,{contentType:f.type||'audio/mpeg',upsert:false});
+  if(upErr){message('Dosya yüklenemedi: '+upErr.message);continue}
+  const {error:dbErr}=await supabaseClient.from('songs').insert({title:f.name.replace(/\.[^.]+$/,''),artist:'',file_path:path,duration});
+  if(dbErr){await supabaseClient.storage.from('ritim-music').remove([path]);message('Kayıt eklenemedi: '+dbErr.message);continue}
+ }
+ await refresh();message('Yükleme işlemi tamamlandı');
+}
+function play(id){
+ const t=items.find(x=>x.id===id);if(!t)return;
+ if(playing===id&&!audio.paused){audio.pause();return}
+ audio.src=t.url;playing=id;el('now').textContent=t.name;el('artist').textContent=t.artist||'Ritim ortak kütüphanesi';
+ audio.play().catch(()=>message('Şarkı oynatılamadı'));el('toggle').textContent='Ⅱ';draw();
+}
 function move(d){if(!items.length)return;let i=items.findIndex(x=>x.id===playing);play(items[(i+d+items.length)%items.length].id)}
-el('files').onchange=e=>{if(e.target.files.length)upload([...e.target.files]);e.target.value=''};el('uploadBtn').onclick=()=>el('files').click();el('search').oninput=draw;
+el('loginBtn').onclick=async()=>{
+ const email=prompt('Yönetici e-posta adresini gir:');if(!email)return;
+ if(email.trim().toLowerCase()!==ADMIN_EMAIL){message('Bu e-posta yönetici değil.');return}
+ const {error}=await supabaseClient.auth.signInWithOtp({email:ADMIN_EMAIL,options:{emailRedirectTo:location.href}});
+ if(error)message('Giriş bağlantısı gönderilemedi: '+error.message);else message('Giriş bağlantısı e-posta adresine gönderildi.');
+};
+el('logoutBtn').onclick=async()=>{await supabaseClient.auth.signOut();message('Yönetici oturumu kapatıldı')};
+el('files').onchange=e=>{if(e.target.files.length&&isAdmin())upload([...e.target.files]);e.target.value=''};
+el('uploadBtn').onclick=()=>{if(isAdmin())el('files').click()};
+el('search').oninput=draw;
 el('quick').onclick=e=>{let b=e.target.closest('[data-play]');if(b)play(b.dataset.play)};
-el('list').onclick=async e=>{let d=e.target.closest('[data-down]'),x=e.target.closest('[data-del]');if(d){let t=items.find(v=>v.id===d.dataset.down),u=URL.createObjectURL(t.blob),a=document.createElement('a');a.href=u;a.download=t.name+'.'+((t.blob.type.split('/')[1]||'mp3').replace('mpeg','mp3'));a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}if(x&&confirm('Bu şarkı silinsin mi?')){if(playing===x.dataset.del){audio.pause();playing=null;el('now').textContent='Bir şarkı seç';el('artist').textContent='Çalmıyor'}await new Promise(ok=>{let r=db.transaction('tracks','readwrite').objectStore('tracks').delete(x.dataset.del);r.onsuccess=ok});refresh()}};
-el('toggle').onclick=()=>{if(!playing){if(items[0])play(items[0].id)}else if(audio.paused)audio.play();else audio.pause()};el('prev').onclick=()=>move(-1);el('next').onclick=()=>move(1);audio.onplay=()=>el('toggle').textContent='Ⅱ';audio.onpause=()=>el('toggle').textContent='▶';audio.onended=()=>move(1);audio.ontimeupdate=()=>{el('elapsed').textContent=fmt(audio.currentTime);el('total').textContent=fmt(audio.duration);el('seek').value=audio.duration?audio.currentTime/audio.duration*100:0};el('seek').oninput=e=>{if(audio.duration)audio.currentTime=audio.duration*e.target.value/100};el('volume').oninput=e=>audio.volume=e.target.value;audio.volume=.8;
-el('home').onclick=()=>{el('search').value='';draw();el('listTitle').textContent='Tüm şarkıların';el('home').classList.add('active');el('library').classList.remove('active')};el('library').onclick=()=>{el('search').value='';draw();el('listTitle').textContent='Kütüphanem';el('library').classList.add('active');el('home').classList.remove('active')};
-(async()=>{try{db=await openDB();await refresh()}catch(e){message('Tarayıcı depolaması açılamadı.')}})();
+el('list').onclick=async e=>{
+ const d=e.target.closest('[data-down]'),x=e.target.closest('[data-del]');
+ if(d){const t=items.find(v=>v.id===d.dataset.down);if(!t)return;const a=document.createElement('a');a.href=t.url;a.download=t.name+'.mp3';a.target='_blank';document.body.appendChild(a);a.click();a.remove()}
+ if(x&&isAdmin()&&confirm('Bu şarkı herkesten silinsin mi?')){
+  const t=items.find(v=>v.id===x.dataset.del);if(!t)return;
+  if(playing===t.id){audio.pause();playing=null;el('now').textContent='Bir şarkı seç'}
+  const {error:storageError}=await supabaseClient.storage.from('ritim-music').remove([t.file_path]);
+  const {error:rowError}=await supabaseClient.from('songs').delete().eq('id',t.id);
+  if(storageError||rowError)message('Silme hatası: '+(rowError||storageError).message);else message('Şarkı silindi');
+  await refresh();
+ }
+};
+el('toggle').onclick=()=>{if(!playing){if(items[0])play(items[0].id)}else if(audio.paused)audio.play();else audio.pause()};
+el('prev').onclick=()=>move(-1);el('next').onclick=()=>move(1);
+audio.onplay=()=>el('toggle').textContent='Ⅱ';audio.onpause=()=>el('toggle').textContent='▶';audio.onended=()=>move(1);
+audio.ontimeupdate=()=>{el('elapsed').textContent=fmt(audio.currentTime);el('total').textContent=fmt(audio.duration);el('seek').value=audio.duration?audio.currentTime/audio.duration*100:0};
+el('seek').oninput=e=>{if(audio.duration)audio.currentTime=audio.duration*e.target.value/100};el('volume').oninput=e=>audio.volume=e.target.value;audio.volume=.8;
+el('home').onclick=()=>{el('search').value='';draw();el('listTitle').textContent='Tüm şarkılar';el('home').classList.add('active');el('library').classList.remove('active')};
+el('library').onclick=()=>{el('search').value='';draw();el('listTitle').textContent='Ortak kütüphane';el('library').classList.add('active');el('home').classList.remove('active')};
+supabaseClient.auth.onAuthStateChange((_event,session)=>{currentUser=session?.user||null;updateAdminUI();refresh()});
+(async()=>{const {data}=await supabaseClient.auth.getSession();currentUser=data.session?.user||null;updateAdminUI();await refresh()})();
 </script></body></html>
