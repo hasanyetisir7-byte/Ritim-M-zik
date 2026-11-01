@@ -8,7 +8,7 @@
 <main class="main"><div class="top"><label class="search">⌕ <input id="search" placeholder="Şarkı veya sanatçı ara..."></label><button class="btn" id="loginBtn">Yönetici girişi</button><button class="btn" id="logoutBtn" style="display:none">Çıkış</button><button class="btn green" id="uploadBtn" style="display:none">＋ Yükle</button></div><h1>Müziğin burada. 🎧</h1><p class="muted">Kendi şarkılarını yükle, dinle ve indir.</p><label class="upload" id="uploadArea" for="files" style="display:none"><span style="font-size:27px">⬆️</span><span><b>Şarkılarını ekle</b><small>MP3, WAV, OGG, M4A ve diğer ses dosyaları</small></span><span class="btn green">Dosya seç</span></label><input id="files" type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac" multiple hidden>
 <div class="heading"><h2>Son eklenenler</h2><span class="muted2" id="count">0 şarkı</span></div><div class="quick" id="quick"></div>
 <div class="heading"><h2 id="listTitle">Tüm şarkıların</h2><span class="muted2">Kişisel kütüphanen</span></div><div class="list" id="list"></div></main></div>
-<div class="player"><div class="now"><b id="now">Bir şarkı seç</b><small id="artist">Çalmıyor</small></div><div class="controls"><button id="prev">⏮</button> <button class="play" id="toggle">▶</button> <button id="next">⏭</button><div class="bar"><span id="elapsed">0:00</span><input id="seek" type="range" min="0" max="100" value="0"><span id="total">0:00</span></div></div><div class="volume">🔊 <input id="volume" type="range" min="0" max="1" step=".01" value=".8"></div></div><div class="lyrics-modal" id="lyricsModal"><div class="lyrics-box"><div class="lyrics-head"><b id="lyricsTitle">Şarkı sözleri</b><button id="closeLyrics" aria-label="Kapat">×</button></div><div id="lyricsText">Bu şarkı için söz eklenmemiş.</div></div></div><div class="toast" id="toast"></div><audio id="audio"></audio>
+<div class="player"><div class="now"><b id="now">Bir şarkı seç</b><small id="artist">Çalmıyor</small></div><div class="controls"><button id="prev">⏮</button> <button class="play" id="toggle">▶</button> <button id="next">⏭</button><div class="bar"><span id="elapsed">0:00</span><input id="seek" type="range" min="0" max="100" value="0"><span id="total">0:00</span></div></div><div class="volume">🔊 <input id="volume" type="range" min="0" max="1" step=".01" value=".8"></div></div><div class="lyrics-modal" id="lyricsModal"><div class="lyrics-box"><div class="lyrics-head"><b id="lyricsTitle">Şarkı sözleri</b><button id="closeLyrics" aria-label="Kapat">×</button></div><div id="lyricsText">Bu şarkı için söz eklenmemiş.</div><div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn green" id="searchLyricsWeb">⌕ İnternette şarkı sözlerini ara</button></div></div></div><div class="toast" id="toast"></div><audio id="audio"></audio>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -16,7 +16,7 @@ const SUPABASE_URL="https://ptntidabnnwthdtxpdvk.supabase.co";
 const SUPABASE_KEY="sb_publishable_jZ4PpPfnaqnx2l-AD9m3uA_sg3CjpSx";
 const ADMIN_EMAIL="hasanmeteyetisir142@gmail.com";
 const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let currentUser=null,items=[],playing=null,audioUrl=null;
+let currentUser=null,items=[],playing=null,audioUrl=null,lyricsSearchTrack=null;
 const audio=document.getElementById('audio'),el=id=>document.getElementById(id);
 function message(s){el('toast').textContent=s;el('toast').style.display='block';setTimeout(()=>el('toast').style.display='none',2600)}
 function fmt(n){return Number.isFinite(Number(n))?Math.floor(Number(n)/60)+':'+String(Math.floor(Number(n)%60)).padStart(2,'0'):'0:00'}
@@ -80,7 +80,7 @@ el('search').oninput=draw;
 el('quick').onclick=e=>{let b=e.target.closest('[data-play]');if(b)play(b.dataset.play)};
 el('list').onclick=async e=>{
  const d=e.target.closest('[data-down]'),x=e.target.closest('[data-del]'),ly=e.target.closest('[data-lyrics]');
- if(ly){const song=items.find(v=>v.id===ly.dataset.lyrics);if(song){el('lyricsTitle').textContent=song.name+' — Şarkı sözleri';el('lyricsText').textContent=song.lyrics||'Bu şarkı için henüz söz eklenmemiş.';el('lyricsModal').classList.add('show')}}
+ if(ly){const song=items.find(v=>v.id===ly.dataset.lyrics);if(song){lyricsSearchTrack=song;el('lyricsTitle').textContent=song.name+' — Şarkı sözleri';el('lyricsText').textContent=song.lyrics||'Bu şarkı için henüz söz eklenmemiş.';el('lyricsModal').classList.add('show')}}
  if(d){const t=items.find(v=>v.id===d.dataset.down);if(!t)return;const a=document.createElement('a');a.href=t.url;a.download=t.name+'.mp3';a.target='_blank';document.body.appendChild(a);a.click();a.remove()}
  if(x&&isAdmin()&&confirm('Bu şarkı herkesten silinsin mi?')){
   const t=items.find(v=>v.id===x.dataset.del);if(!t)return;
@@ -91,7 +91,7 @@ el('list').onclick=async e=>{
   await refresh();
  }
 };
-el('closeLyrics').onclick=()=>el('lyricsModal').classList.remove('show');el('lyricsModal').onclick=e=>{if(e.target===el('lyricsModal'))el('lyricsModal').classList.remove('show')};
+el('searchLyricsWeb').onclick=()=>{if(!lyricsSearchTrack)return;const q=[lyricsSearchTrack.artist,lyricsSearchTrack.name,'şarkı sözleri'].filter(Boolean).join(' ');window.open('https://www.google.com/search?q='+encodeURIComponent(q),'_blank','noopener,noreferrer')};\nel('closeLyrics').onclick=()=>el('lyricsModal').classList.remove('show');el('lyricsModal').onclick=e=>{if(e.target===el('lyricsModal'))el('lyricsModal').classList.remove('show')};
 el('toggle').onclick=()=>{if(!playing){if(items[0])play(items[0].id)}else if(audio.paused)audio.play();else audio.pause()};
 el('prev').onclick=()=>move(-1);el('next').onclick=()=>move(1);
 audio.onplay=()=>el('toggle').textContent='Ⅱ';audio.onpause=()=>el('toggle').textContent='▶';audio.onended=()=>move(1);
